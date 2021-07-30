@@ -116,7 +116,7 @@ class AllCategoriesScreen extends StatelessWidget {
                       },
                       itemBuilder: (BuildContext context, int index) {
                         return CircleAvatar(
-                          backgroundColor: black,
+                          backgroundColor: white,
                           radius: 10,
                         );
                       },
