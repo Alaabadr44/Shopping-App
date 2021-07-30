@@ -1,0 +1,10 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23" width="23" height="23">
+	<title>Group 124</title>
+	<defs>
+		<image  width="23" height="21" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAVCAMAAACaPIWZAAAAAXNSR0IB2cksfwAAAJZQTFRFAAAAPABTOgBRPAJSOgFSLgBdOwFSOwJSOwJROgJSQABQOgNROgJROwJTOwFTOgFSOgJSOABQOgJTOwFSOgBROQJTOwFSOwFSOgBVOwFSQABYQABQOgFSOwFSOgBQOwBXPQBSOwJTPAFSOwFSPAFTOgFRPABROgFSPAFSPAFSOwBTPABSOwBSOwBROwFRPABROwFROQBTjUDIwgAAADJ0Uk5TAG8Wmc0L/6GUfxBYkKi/7GogkPdPb+/zMOggIMb9MDhUl+bTv99rxfO7X4CFl713z3hNJe+VAAAAm0lEQVR4nHWQ1xYCIQxEY4suKnbUXbtrxfr/PyegYFbDPA2XnJzJAFCVysCqUq3xHOsRjo0IxyTCix+i2WpL2bEcu4H2+gMkGn7wSGFB44nDCf5qmrIYUZrdDFYZwOwfzxcAS2Z8Zbavw2uzzXfO7G2Yg7PH0zn192oX0kZXWnx7uLytcXlG+rmC55r2dvMW77TPh/CWTAM8w8YX4WYKdKhcv+AAAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="Background" href="#img1" x="0" y="1" />
+</svg>
