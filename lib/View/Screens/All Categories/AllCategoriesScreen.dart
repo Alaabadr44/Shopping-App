@@ -10,7 +10,7 @@ import '../HomeScreen/HomeScreen.dart';
 
 class AllCategoriesScreen extends StatelessWidget {
   const AllCategoriesScreen({Key? key}) : super(key: key);
-  static String routeName = '/AllCategoriesScreen' ;
+  static String routeName = '/AllCategoriesScreen';
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +116,7 @@ class AllCategoriesScreen extends StatelessWidget {
                       },
                       itemBuilder: (BuildContext context, int index) {
                         return CircleAvatar(
-                          backgroundColor: white,
+                          backgroundColor: black,
                           radius: 10,
                         );
                       },
