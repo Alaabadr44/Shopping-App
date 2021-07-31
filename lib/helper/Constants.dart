@@ -15,7 +15,7 @@ class Endpoints {
 }
 
 //?  this for load product after sign in and sign up
-String? token = CacheHelper.value(kay: "token");
+String? token = CacheHelper.getValue(kay: "token");
 
 //?  this for load product after sign in and sign up
 bool? isUser;

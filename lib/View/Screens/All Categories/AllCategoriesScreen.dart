@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -107,7 +109,7 @@ class AllCategoriesScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: ListView.separated(
-                      itemCount: 10,
+                      itemCount: 8,
                       separatorBuilder: (BuildContext context, int index) {
                         return Divider(
                           color: dividerColor!.withOpacity(0.5),
@@ -115,9 +117,28 @@ class AllCategoriesScreen extends StatelessWidget {
                         );
                       },
                       itemBuilder: (BuildContext context, int index) {
-                        return CircleAvatar(
-                          backgroundColor: black,
-                          radius: 10,
+                        return ExpansionTile(
+                          title: Text(
+                            "Officewear",
+                            style: defaultTextStyle(context).copyWith(
+                                fontSize: 17.sp, fontWeight: FontWeight.w400),
+                          ),
+                          backgroundColor: white,
+                          trailing: CircleAvatar(
+                            backgroundColor: secondaryColor,
+                            radius: 15.r,
+                            child: Center(
+                              child: Transform.rotate(
+                                alignment: Alignment.center,
+                                angle: (pi / -2),
+                                child: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: white,
+                                  size: 20.sp,
+                                ),
+                              ),
+                            ),
+                          ),
                         );
                       },
                     ),

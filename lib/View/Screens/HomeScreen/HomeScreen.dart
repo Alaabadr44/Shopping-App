@@ -10,8 +10,7 @@ import 'notifications/notifications.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
   double? elevation;
-    static String routeName = "/HomeScreen";
-
+  static String routeName = "/HomeScreen";
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +18,18 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         HomeCubit cubit = HomeCubit.get(context);
         elevation = cubit.elevation;
+        // return Directionality(
+        // textDirection: TextDirection.rtl,
+        // child: Scaffold());
         return Scaffold(
           appBar: homeAppBarScreen(
             context,
             3,
             elevation: elevation,
             notificationsPress: () => navAndFinish(
-                context: context, routeName: NotificationsScreen.routeName,),
+              context: context,
+              routeName: NotificationsScreen.routeName,
+            ),
           ),
           body: SafeArea(
             child: cubit.screens[cubit.currentIndex],

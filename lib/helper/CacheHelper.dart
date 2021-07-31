@@ -23,7 +23,7 @@ class CacheHelper {
       return await sharedPreferences!.setStringList(kay!, value);
   }
 
-  static dynamic value({
+  static dynamic getValue({
     @required String? kay,
   }) =>
       sharedPreferences!.get(kay!);
