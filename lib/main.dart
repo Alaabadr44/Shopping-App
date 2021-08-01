@@ -4,12 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Controller/Auth/auth_cubit.dart';
+import 'Controller/Categoriescubit/categoriescubit_cubit.dart';
 import 'Controller/Home/home_cubit.dart';
 import 'Controller/bolcobserver.dart';
 import 'View/Screens/HomeScreen/HomeScreen.dart';
 import 'View/Themes/Route.dart';
-
-
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +29,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<HomeCubit>(
             create: (context) => HomeCubit(),
           ),
+          BlocProvider<CategoriesCubit>(
+            create: (context) => CategoriesCubit(),
+          )
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

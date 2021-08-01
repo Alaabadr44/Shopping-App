@@ -255,10 +255,10 @@ Card buildCategoryItem(
   required String assetPathImage,
   required String categorieName,
   void Function()? categoriePress,
-  bool isPress = false,
+  Color? colorPress ,
 }) {
   return Card(
-    color: !isPress ? secondaryColor : white,
+    color: colorPress ?? secondaryColor ,
     child: Container(
       height: 97.h,
       width: 90.w,

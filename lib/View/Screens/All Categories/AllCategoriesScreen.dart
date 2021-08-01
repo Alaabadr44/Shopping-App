@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../Controller/Categoriescubit/categoriescubit_cubit.dart';
 import '../../../helper/MyHelper.dart';
 import '../../../models/CategorieModel.dart';
 import '../../Themes/Colors.dart';
@@ -10,8 +12,9 @@ import '../../widgets/texts.dart';
 import '../HomeScreen/HomePageWidgets.dart';
 import '../HomeScreen/HomeScreen.dart';
 
+// ignore: must_be_immutable
 class AllCategoriesScreen extends StatelessWidget {
-  const AllCategoriesScreen({Key? key}) : super(key: key);
+  AllCategoriesScreen({Key? key}) : super(key: key);
   static String routeName = '/AllCategoriesScreen';
 
   @override
@@ -39,27 +42,10 @@ class AllCategoriesScreen extends StatelessWidget {
                 padding: EdgeInsetsDirectional.only(start: _width * 0.05),
                 height: 680.h,
                 width: 120.w,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  // shrinkWrap: true,
-                  itemCount: categories.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return sb(h: 24.h);
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    bool isPress = index % 2 == 1;
-                    return Container(
-                      height: 100.h,
-                      width: 100.w,
-                      child: buildCategoryItem(
-                        context,
-                        assetPathImage: categories[index].categorieSvgIcon,
-                        categorieName: categories[index].categorieName,
-                        isPress: isPress,
-                        categoriePress: () {},
-                      ),
-                    );
+                child: BlocBuilder<CategoriesCubit, CategoriesState>(
+                  builder: (context, state) {
+                    CategoriesCubit _cubit = CategoriesCubit.get(context);
+                    return categoriesItems(_cubit);
                   },
                 ),
               ),
@@ -67,36 +53,18 @@ class AllCategoriesScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      TextButton(
-                        child: Text(
-                          "MEN’S APPAREL",
-                          style: defaultTextStyle(context).copyWith(
-                            color: black,
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        onPressed: () {},
-                      ),
-                      sb(w: 25.w),
-                      TextButton(
-                        child: Text(
-                          "WOMEN APPAREL",
-                          style: defaultTextStyle(context).copyWith(
-                            color: Color(0xff939292),
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        onPressed: () {},
-                      ),
-                    ],
+                  BlocBuilder<CategoriesCubit, CategoriesState>(
+                    builder: (context, state) {
+                      CategoriesCubit _cubit = CategoriesCubit.get(context);
+                      return menOrWomenTextButton(
+                        context,
+                        secondWord: _cubit.secondWord ?? "Apparel",
+                      );
+                    },
                   ),
                   Container(
-                    height: 400,
-                    width: 240,
+                    height: 407.h,
+                    width: 240.w,
                     decoration: BoxDecoration(
                       color: white,
                       boxShadow: [
@@ -108,38 +76,10 @@ class AllCategoriesScreen extends StatelessWidget {
                       ],
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: ListView.separated(
-                      itemCount: 8,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Divider(
-                          color: dividerColor!.withOpacity(0.5),
-                          thickness: 3,
-                        );
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        return ExpansionTile(
-                          title: Text(
-                            "Officewear",
-                            style: defaultTextStyle(context).copyWith(
-                                fontSize: 17.sp, fontWeight: FontWeight.w400),
-                          ),
-                          backgroundColor: white,
-                          trailing: CircleAvatar(
-                            backgroundColor: secondaryColor,
-                            radius: 15.r,
-                            child: Center(
-                              child: Transform.rotate(
-                                alignment: Alignment.center,
-                                angle: (pi / -2),
-                                child: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: white,
-                                  size: 20.sp,
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
+                    child: BlocBuilder<CategoriesCubit, CategoriesState>(
+                      builder: (context, state) {
+                        CategoriesCubit _cubit = CategoriesCubit.get(context);
+                        return subcategoriesItems(_cubit);
                       },
                     ),
                   )
@@ -151,4 +91,111 @@ class AllCategoriesScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+ListView categoriesItems(CategoriesCubit _cubit) {
+  return ListView.separated(
+    shrinkWrap: true,
+    scrollDirection: Axis.vertical,
+    // shrinkWrap: true,
+    itemCount: categories.length,
+    separatorBuilder: (BuildContext context, int index) {
+      return sb(h: 24.h);
+    },
+    itemBuilder: (BuildContext context, int index) {
+      return Container(
+        height: 100.h,
+        width: 100.w,
+        child: buildCategoryItem(
+          context,
+          assetPathImage: categories[index].categorieSvgIcon,
+          categorieName: categories[index].categorieName,
+          colorPress: index == _cubit.categoryPressItem ? white : null,
+          categoriePress: () {
+            _cubit.categoryPress(index, categories[index].categorieName);
+          },
+        ),
+      );
+    },
+  );
+}
+
+ListView subcategoriesItems(CategoriesCubit _cubit) {
+  return ListView.separated(
+    itemCount: categories.length,
+    separatorBuilder: (BuildContext context, int index) {
+      return Divider(
+        color: dividerColor!.withOpacity(0.5),
+        thickness: 3,
+      );
+    },
+    itemBuilder: (BuildContext context, int index) {
+      return Container(
+        width: 240.w,
+        height: 67.h,
+        child: ExpansionTile(
+          title: Text(
+            categories[_cubit.categoryPressItem ?? 0].subCategoryType![index],
+            style: defaultTextStyle(context)
+                .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w400),
+          ),
+          backgroundColor: white,
+          trailing: bottomArrow(),
+        ),
+      );
+    },
+  );
+}
+
+CircleAvatar bottomArrow() {
+  return CircleAvatar(
+    backgroundColor: secondaryColor,
+    radius: 15.r,
+    child: Center(
+      child: Transform.rotate(
+        alignment: Alignment.center,
+        angle: (pi / -2),
+        child: Icon(
+          Icons.arrow_back_ios,
+          color: white,
+          size: 20.sp,
+        ),
+      ),
+    ),
+  );
+}
+
+Row menOrWomenTextButton(
+  BuildContext context, {
+  void Function()? menPress,
+  void Function()? womenPress,
+  required String? secondWord,
+}) {
+  return Row(
+    children: [
+      TextButton(
+        child: Text(
+          "MEN’S " + (secondWord ?? ""),
+          style: defaultTextStyle(context).copyWith(
+            color: black,
+            fontSize: 13.sp,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        onPressed: menPress ?? () {},
+      ),
+      sb(w: 25.w),
+      TextButton(
+        child: Text(
+          "WOMEN " + (secondWord ?? ""),
+          style: defaultTextStyle(context).copyWith(
+            color: Color(0xff939292),
+            fontSize: 13.sp,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        onPressed: womenPress ?? () {},
+      ),
+    ],
+  );
 }
