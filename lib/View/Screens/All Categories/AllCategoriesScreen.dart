@@ -59,29 +59,40 @@ class AllCategoriesScreen extends StatelessWidget {
                       return menOrWomenTextButton(
                         context,
                         secondWord: _cubit.secondWord ?? "Apparel",
+                        menPress: () {
+                          _cubit.menOrWomenPress(context, isMen: true);
+                        },
+                        menPressColor: _cubit.menPressBottomColor,
+                        womenPress: () {
+                          _cubit.menOrWomenPress(context, isMen: false);
+                        },
+                        womenPressColor: _cubit.womenPressBottomColor,
                       );
                     },
                   ),
-                  Container(
-                    height: 407.h,
-                    width: 240.w,
-                    decoration: BoxDecoration(
-                      color: white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xffF3D6FF).withOpacity(0.5),
-                          blurRadius: 20,
-                          spreadRadius: 2,
+                  BlocBuilder<CategoriesCubit, CategoriesState>(
+                    builder: (context, state) {
+                      CategoriesCubit _cubit = CategoriesCubit.get(context);
+                      return Container(
+                        height: _cubit.subCategoriesMainBoxHight.h,
+                        width: 240.w,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).canvasColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xffF3D6FF).withOpacity(0.5),
+                              blurRadius: 20,
+                              spreadRadius: 2,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      ],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: BlocBuilder<CategoriesCubit, CategoriesState>(
-                      builder: (context, state) {
-                        CategoriesCubit _cubit = CategoriesCubit.get(context);
-                        return subcategoriesItems(_cubit);
-                      },
-                    ),
+                        child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: subcategoriesItems(_cubit),
+                        ),
+                      );
+                    },
                   )
                 ],
               )
@@ -99,9 +110,7 @@ ListView categoriesItems(CategoriesCubit _cubit) {
     scrollDirection: Axis.vertical,
     // shrinkWrap: true,
     itemCount: categories.length,
-    separatorBuilder: (BuildContext context, int index) {
-      return sb(h: 24.h);
-    },
+    separatorBuilder: (BuildContext context, int index) => sb(h: 24.h),
     itemBuilder: (BuildContext context, int index) {
       return Container(
         height: 100.h,
@@ -122,39 +131,75 @@ ListView categoriesItems(CategoriesCubit _cubit) {
 
 ListView subcategoriesItems(CategoriesCubit _cubit) {
   return ListView.separated(
+    physics: NeverScrollableScrollPhysics(),
+    shrinkWrap: true,
     itemCount: categories.length,
-    separatorBuilder: (BuildContext context, int index) {
-      return Divider(
-        color: dividerColor!.withOpacity(0.5),
-        thickness: 3,
-      );
-    },
+    separatorBuilder: (BuildContext context, int index) => Divider(
+      color: dividerColor!.withOpacity(0.5),
+      thickness: 3,
+    ),
     itemBuilder: (BuildContext context, int index) {
-      return Container(
-        width: 240.w,
-        height: 67.h,
+      return Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          initiallyExpanded: false,
           title: Text(
             categories[_cubit.categoryPressItem ?? 0].subCategoryType![index],
             style: defaultTextStyle(context)
                 .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w400),
           ),
           backgroundColor: white,
-          trailing: bottomArrow(),
+          trailing: bottomArrow(index, _cubit),
+          onExpansionChanged: (isExpansion) =>
+              _cubit.subcategoryPress(isExpansion, index),
+          children: [
+            Container(
+              height: 193.h,
+              width: 240.w,
+              child: GridView.count(
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 5,
+                crossAxisCount: 3,
+                children: <Widget>[
+                  Container(
+                    height: 49,
+                    width: 40,
+                    color: black,
+                  ),
+                  Container(
+                    height: 49,
+                    width: 40,
+                    color: black,
+                  ),
+                  Container(
+                    height: 49,
+                    width: 40,
+                    color: black,
+                  ),
+                  Container(
+                    height: 49,
+                    width: 40,
+                    color: black,
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
       );
     },
   );
 }
 
-CircleAvatar bottomArrow() {
+CircleAvatar bottomArrow(int index, CategoriesCubit _cubit) {
   return CircleAvatar(
-    backgroundColor: secondaryColor,
+    backgroundColor:
+        index != _cubit.subcategoryPressItem ? secondaryColor : black,
     radius: 15.r,
     child: Center(
       child: Transform.rotate(
         alignment: Alignment.center,
-        angle: (pi / -2),
+        angle: index != _cubit.subcategoryPressItem ? (pi / -2) : (pi / 2),
         child: Icon(
           Icons.arrow_back_ios,
           color: white,
@@ -168,7 +213,9 @@ CircleAvatar bottomArrow() {
 Row menOrWomenTextButton(
   BuildContext context, {
   void Function()? menPress,
+  Color? menPressColor,
   void Function()? womenPress,
+  Color? womenPressColor,
   required String? secondWord,
 }) {
   return Row(
@@ -177,7 +224,7 @@ Row menOrWomenTextButton(
         child: Text(
           "MEN’S " + (secondWord ?? ""),
           style: defaultTextStyle(context).copyWith(
-            color: black,
+            color: menPressColor ?? Color(0xff939292),
             fontSize: 13.sp,
             fontWeight: FontWeight.w400,
           ),
@@ -189,7 +236,7 @@ Row menOrWomenTextButton(
         child: Text(
           "WOMEN " + (secondWord ?? ""),
           style: defaultTextStyle(context).copyWith(
-            color: Color(0xff939292),
+            color: womenPressColor ?? Color(0xff939292),
             fontSize: 13.sp,
             fontWeight: FontWeight.w400,
           ),

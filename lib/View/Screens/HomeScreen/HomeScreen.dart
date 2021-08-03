@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../Controller/Home/home_cubit.dart';
-import '../../../helper/MyHelper.dart';
 import 'HomePageWidgets.dart';
-import 'notifications/notifications.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -22,15 +20,7 @@ class HomeScreen extends StatelessWidget {
         // textDirection: TextDirection.rtl,
         // child: Scaffold());
         return Scaffold(
-          appBar: homeAppBarScreen(
-            context,
-            3,
-            elevation: elevation,
-            notificationsPress: () => navAndFinish(
-              context: context,
-              routeName: NotificationsScreen.routeName,
-            ),
-          ),
+          appBar: cubit.homeAppBar,
           body: SafeArea(
             child: cubit.screens[cubit.currentIndex],
           ),

@@ -41,7 +41,7 @@ BlocBuilder<HomeCubit, HomeState> bottomNavigationBar() {
               fontWeight: FontWeight.w400,
             ),
         unselectedLabelStyle: labelStyle(context, false),
-        onTap: (x) => _cubit.changePressBottomBarIcon(x),
+        onTap: (x) => _cubit.changePressBottomBarIcon(x, context),
         selectedFontSize: 30.sp,
         unselectedFontSize: 15.sp,
         showSelectedLabels: true,
@@ -255,10 +255,10 @@ Card buildCategoryItem(
   required String assetPathImage,
   required String categorieName,
   void Function()? categoriePress,
-  Color? colorPress ,
+  Color? colorPress,
 }) {
   return Card(
-    color: colorPress ?? secondaryColor ,
+    color: colorPress ?? secondaryColor,
     child: Container(
       height: 97.h,
       width: 90.w,
