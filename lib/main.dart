@@ -12,10 +12,10 @@ import 'View/Themes/Route.dart';
 import 'helper/CacheHelper.dart';
 import 'helper/DioHelper.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
-  CacheHelper.init(); //! =>>>>>>>>>> SharedPreferences
+ await CacheHelper.init(); //! =>>>>>>>>>> SharedPreferences
   DioHelper.init(); //!   =>>>>>>>>>>       Dio
   runApp(MyApp());
 }
