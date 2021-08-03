@@ -9,8 +9,8 @@ import '../../../helper/MyHelper.dart';
 import '../../../models/CategorieModel.dart';
 import '../../Themes/Colors.dart';
 import '../../widgets/texts.dart';
-import '../HomeScreen/HomePageWidgets.dart';
-import '../HomeScreen/HomeScreen.dart';
+import '../Home/HomeScreen.dart';
+import '../Home/widgets/HomePageWidgets.dart';
 
 // ignore: must_be_immutable
 class AllCategoriesScreen extends StatelessWidget {

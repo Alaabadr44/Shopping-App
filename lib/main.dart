@@ -7,12 +7,16 @@ import 'Controller/Auth/auth_cubit.dart';
 import 'Controller/Categoriescubit/categoriescubit_cubit.dart';
 import 'Controller/Home/home_cubit.dart';
 import 'Controller/bolcobserver.dart';
-import 'View/Screens/HomeScreen/HomeScreen.dart';
+import 'View/Screens/Home/HomeScreen.dart';
 import 'View/Themes/Route.dart';
+import 'helper/CacheHelper.dart';
+import 'helper/DioHelper.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
+  CacheHelper.init(); //! =>>>>>>>>>> SharedPreferences
+  DioHelper.init(); //!   =>>>>>>>>>>       Dio
   runApp(MyApp());
 }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../Controller/Home/home_cubit.dart';
-import 'HomePageWidgets.dart';
+import 'widgets/HomePageWidgets.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {

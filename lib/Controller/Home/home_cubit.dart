@@ -1,15 +1,14 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../View/Screens/HomeScreen/AccountScreen/AccountScreen.dart';
-import '../../View/Screens/HomeScreen/CartScreen/CartScreen.dart';
-import '../../View/Screens/HomeScreen/Home/HomeForHomeScreen.dart';
-import '../../View/Screens/HomeScreen/HomePageWidgets.dart';
-import '../../View/Screens/HomeScreen/Messages/MessagesForHomeScreen.dart';
-import '../../View/Screens/HomeScreen/notifications/notifications.dart';
+import '../../View/Screens/Home/AccountScreen/AccountScreen.dart';
+import '../../View/Screens/Home/CartScreen/CartScreen.dart';
+import '../../View/Screens/Home/Home/HomeForHomeScreen.dart';
+import '../../View/Screens/Home/Messages/MessagesForHomeScreen.dart';
+import '../../View/Screens/Home/notifications/notifications.dart';
+import '../../View/Screens/Home/widgets/HomePageWidgets.dart';
 import '../../helper/MyHelper.dart';
 
 part 'home_state.dart';

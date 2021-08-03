@@ -6,7 +6,7 @@ import '../../../../helper/MyHelper.dart';
 import '../../../../models/CategorieModel.dart';
 import '../../../Themes/Colors.dart';
 import '../../All%20Categories/AllCategoriesScreen.dart';
-import '../HomePageWidgets.dart';
+import '../widgets/HomePageWidgets.dart';
 
 class HomeForHomeScreen extends StatelessWidget {
   const HomeForHomeScreen({Key? key}) : super(key: key);

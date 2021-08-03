@@ -85,7 +85,7 @@ class AccountScreen extends StatelessWidget {
                   sb(h: 7.h),
                   version(context),
                 ],
-              )
+              ),
             ],
           ),
         ],
@@ -119,7 +119,9 @@ Padding dividerInOptionsList() {
   );
 }
 
-Container listOptions({required Widget child}) {
+Container listOptions({
+  required Widget child,
+}) {
   return Container(
       margin: EdgeInsets.symmetric(horizontal: 17),
       height: 230.h,

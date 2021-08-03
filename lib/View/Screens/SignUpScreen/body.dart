@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../Controller/Auth/auth_cubit.dart';
 
+import '../../../Controller/Auth/auth_cubit.dart';
 import '../../../helper/MyHelper.dart';
 import '../../Themes/Colors.dart';
 import '../../widgets/bottoms.dart';
@@ -112,7 +112,7 @@ class SignUpScreenBody extends StatelessWidget {
                     buttonColor: white,
                     onPressed: () {
                       if (formkaySignUP.currentState!.validate()) {
-                        //? when done backend come here 
+                        //? when done backend come here
                       }
                     },
                   ),
