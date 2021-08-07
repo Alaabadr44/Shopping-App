@@ -34,7 +34,7 @@ class HomeCubit extends Cubit<HomeState> {
   void changePressBottomBarIcon(int x, context) {
     currentIndex = x;
     if (x == 1) {
-       elevation = 0;
+      elevation = 0;
     } else if (x == 3) {
       homeAppBar = null;
     } else {

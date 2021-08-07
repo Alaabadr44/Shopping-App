@@ -11,6 +11,7 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // double _hight = MediaQuery.of(context).size.height;
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -96,7 +97,7 @@ class AccountScreen extends StatelessWidget {
 
 Container secondBackGround() {
   return Container(
-    height: 585.4.h,
+    height: 585.57.h,
     width: double.infinity,
     decoration: BoxDecoration(
       color: secondaryColor,
@@ -210,7 +211,7 @@ GestureDetector accountOptionButton(
           if (isLanguageOption) Spacer(),
           if (isLanguageOption)
             Padding(
-              padding: EdgeInsetsDirectional.only(end: 43.w),
+              padding: EdgeInsetsDirectional.only(end: 34.w),
               child: Text(
                 language ?? "English",
                 style: defaultTextStyle(context).copyWith(

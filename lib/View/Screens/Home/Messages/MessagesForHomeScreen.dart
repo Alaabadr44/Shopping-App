@@ -12,16 +12,14 @@ class MessagesForHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
-      // physics: NeverScrollableScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           sb(h: 20.h),
           messagesTopic(_width, context, "Messages"),
           sb(h: 24.h),
-          Container(
-            width: _width,
-            height: 800.h,
+          massagesBackGround(
+            _width,
             child: ListView.separated(
               // shrinkWrap: true,
               physics: BouncingScrollPhysics(),
@@ -50,6 +48,22 @@ class MessagesForHomeScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+
+
+
+
+  Container massagesBackGround(
+    double _width, {
+    required Widget child,
+  }) {
+    return Container(
+      width: _width,
+      height: 800.h,
+      child: child,
     );
   }
 
@@ -183,4 +197,3 @@ class MessagesForHomeScreen extends StatelessWidget {
       ),
     );
   }
-}

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app/View/Themes/Colors.dart';
 
 import 'Controller/Auth/auth_cubit.dart';
 import 'Controller/Categoriescubit/categoriescubit_cubit.dart';
@@ -12,11 +14,18 @@ import 'View/Themes/Route.dart';
 import 'helper/CacheHelper.dart';
 import 'helper/DioHelper.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
- await CacheHelper.init(); //! =>>>>>>>>>> SharedPreferences
+  await CacheHelper.init(); //! =>>>>>>>>>> SharedPreferences
   DioHelper.init(); //!   =>>>>>>>>>>       Dio
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: premiumColor,
+      // statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: premiumColor,
+    ),
+  );
   runApp(MyApp());
 }
 
