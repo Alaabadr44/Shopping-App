@@ -48,7 +48,7 @@ String? validator({
 }
 
 void navAndFinish({
-  required context,
+  required BuildContext context,
   required String routeName,
   Object? data,
 }) =>
@@ -61,7 +61,7 @@ void nav({
 }) =>
     Navigator.of(context).pushNamed(routeName, arguments: data);
 
-SizedBox sb({double? h, double? w}) => SizedBox(height: h, width: w);
+SizedBox sb({double? h, double? w}) => SizedBox(width: w, height: h);
 
 Object? dataFromScreen(BuildContext context) =>
     ModalRoute.of(context)!.settings.arguments;

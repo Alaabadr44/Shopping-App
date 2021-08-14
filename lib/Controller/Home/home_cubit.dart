@@ -31,10 +31,22 @@ class HomeCubit extends Cubit<HomeState> {
 
   AppBar? homeAppBar;
 
-  void changePressBottomBarIcon(int x, context) {
+  void changePressBottomBarIcon(
+    int x,
+    context,
+  ) {
     currentIndex = x;
-    if (x == 1) {
+    if (x == 1 || x == 2) {
       elevation = 0;
+      homeAppBar = homeAppBarScreen(
+        context,
+        3,
+        elevation: elevation,
+        notificationsPress: () => navAndFinish(
+            context: context,
+            routeName: NotificationsScreen.routeName,
+            data: {"x": x}),
+      );
     } else if (x == 3) {
       homeAppBar = null;
     } else {

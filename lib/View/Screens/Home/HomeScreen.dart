@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
           body: SafeArea(
             child: cubit.screens[cubit.currentIndex],
           ),
-          bottomNavigationBar: bottomNavigationBar(),
+          bottomNavigationBar: HomeBottomNavigationBar(),
         );
       },
     );

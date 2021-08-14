@@ -22,16 +22,28 @@ Text loginOrSignUp(BuildContext context, String x, double width) {
   );
 }
 
-Padding mainBigTopic(double _width, BuildContext context, String topic) {
-  return Padding(
-    padding: EdgeInsetsDirectional.only(start: _width * 0.05),
-    child: Text(
-      topic,
-      style: defaultTextStyle(context).copyWith(
-        color: black,
-        fontSize: 35.sp,
-        fontWeight: FontWeight.w900,
+
+
+class MainBigTopic extends StatelessWidget {
+  final String topic;
+  const MainBigTopic({
+    Key? key,
+    required this.topic,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: EdgeInsetsDirectional.only(start: _width * 0.05),
+      child: Text(
+        topic,
+        style: defaultTextStyle(context).copyWith(
+          color: black,
+          fontSize: 35.sp,
+          fontWeight: FontWeight.w900,
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

@@ -43,13 +43,13 @@ class SignUpScreenBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                sb(h: 110.h),
+            SizedBox(height: 110.h),
                 Center(child: shopping(x: white)),
-                sb(h: 75.h),
+            SizedBox(height: 75.h),
                 Container(
                     padding: EdgeInsetsDirectional.only(start: width / 10),
                     child: loginOrSignUp(context, 'Sign up', width)),
-                sb(h: 43.h),
+            SizedBox(height: 43.h),
                 customTextFelid(
                   widthScreen: width,
                   context: context,
@@ -59,7 +59,7 @@ class SignUpScreenBody extends StatelessWidget {
                   validator: (x) => validator(text: x, isFullName: true),
                   keyboardTypeAction: TextInputType.name,
                 ),
-                sb(h: 40.h),
+            SizedBox(height: 40.h),
                 customTextFelid(
                   widthScreen: width,
                   context: context,
@@ -69,7 +69,7 @@ class SignUpScreenBody extends StatelessWidget {
                   validator: (x) => validator(text: x, isEmail: true),
                   keyboardTypeAction: TextInputType.emailAddress,
                 ),
-                sb(h: 40.h),
+            SizedBox(height: 40.h),
                 customTextFelid(
                   widthScreen: width,
                   context: context,
@@ -79,7 +79,7 @@ class SignUpScreenBody extends StatelessWidget {
                   validator: (x) => validator(text: x, isPhone: true),
                   keyboardTypeAction: TextInputType.phone,
                 ),
-                sb(h: 40.h),
+            SizedBox(height: 40.h),
                 BlocBuilder<AuthCubit, AuthState>(
                   builder: (context, state) {
                     AuthCubit cubit = AuthCubit.get(context);
@@ -103,7 +103,7 @@ class SignUpScreenBody extends StatelessWidget {
                     );
                   },
                 ),
-                sb(h: 60.h),
+            SizedBox(height: 60.h),
                 Center(
                   child: mainButton(
                     context: context,

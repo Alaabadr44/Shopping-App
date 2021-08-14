@@ -4,42 +4,41 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../helper/MyHelper.dart';
 import '../../../Themes/Colors.dart';
+import '../../ChatScreen/ChatScreen.dart';
 
 class MessagesForHomeScreen extends StatelessWidget {
   const MessagesForHomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          sb(h: 20.h),
-          messagesTopic(_width, context, "Messages"),
-          sb(h: 24.h),
-          massagesBackGround(
-            _width,
+          SizedBox(height: 20.h),
+          MessagesTopic(topic: "Messages"),
+          SizedBox(height: 24.h),
+          MassagesBackGround(
             child: ListView.separated(
               // shrinkWrap: true,
               physics: BouncingScrollPhysics(),
               itemCount: 15,
               separatorBuilder: (BuildContext context, int index) {
-                return sb(h: 20.h);
+                return SizedBox(height: 20.h);
               },
               itemBuilder: (BuildContext context, int index) {
                 bool tryRead = false;
                 tryRead = index == 0 || index == 1 ? false : true;
                 // if ((index) % 2 == 0) {
                 // }
-                return massageModelView(
-                  _width,
-                  context,
+                return MassageModelView(
                   massageSender: "Alaa badr",
                   massageText: "50% OFF in Ultrashort AllTerrain Ltd Shoes!!",
                   massageTime: "10;20 AM",
                   isReading: tryRead,
                   // massageSenderPhoto: "assets/ico_svg.svg",
+                  massagePress: () =>
+                      nav(context: context, routeName: ChatScreen.routeName),
                   massageSenderPhotoUrl:
                       "https://pbs.twimg.com/profile_images/1416573352358162446/vQPbSf9Z_400x400.jpg",
                 );
@@ -52,26 +51,37 @@ class MessagesForHomeScreen extends StatelessWidget {
   }
 }
 
+class MassagesBackGround extends StatelessWidget {
+  final Widget child;
+  const MassagesBackGround({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
-
-
-
-  Container massagesBackGround(
-    double _width, {
-    required Widget child,
-  }) {
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      width: _width,
+      width: MediaQuery.of(context).size.width,
       height: 800.h,
       child: child,
     );
   }
+}
 
-  Padding messagesTopic(double _width, BuildContext context, String x) {
+class MessagesTopic extends StatelessWidget {
+  final String topic;
+  const MessagesTopic({
+    Key? key,
+    required this.topic,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsetsDirectional.only(start: _width * 0.05),
       child: Text(
-        x,
+        topic,
         style: defaultTextStyle(context).copyWith(
           color: black,
           fontSize: 35.sp,
@@ -80,18 +90,30 @@ class MessagesForHomeScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Container massageModelView(
-    double _width,
-    BuildContext context, {
-    required bool isReading,
-    required String massageTime,
-    required String massageText,
-    required String massageSender,
-    String? massageSenderPhoto,
-    String? massageSenderPhotoUrl,
-    void Function()? massagePress,
-  }) {
+class MassageModelView extends StatelessWidget {
+  final bool isReading;
+  final String massageTime;
+  final String massageText;
+  final String massageSender;
+  final String? massageSenderPhoto;
+  final String? massageSenderPhotoUrl;
+  final void Function()? massagePress;
+  const MassageModelView({
+    Key? key,
+    required this.isReading,
+    required this.massageTime,
+    required this.massageText,
+    required this.massageSender,
+    this.massageSenderPhoto,
+    this.massageSenderPhotoUrl,
+    this.massagePress,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
     var fc = massageSender.split(" ")[0].characters.first.toUpperCase();
     var sc = massageSender.split(" ")[1].characters.first.toUpperCase();
     return Container(
@@ -120,7 +142,7 @@ class MessagesForHomeScreen extends StatelessWidget {
               shape: BoxShape.circle,
               image: massageSenderPhotoUrl != null
                   ? DecorationImage(
-                      image: NetworkImage(massageSenderPhotoUrl),
+                      image: NetworkImage(massageSenderPhotoUrl!),
                       fit: BoxFit.cover,
                     )
                   : null,
@@ -128,7 +150,7 @@ class MessagesForHomeScreen extends StatelessWidget {
             child: massageSenderPhotoUrl == null
                 ? massageSenderPhoto != null
                     ? SvgPicture.asset(
-                        massageSenderPhoto,
+                        massageSenderPhoto!,
                         height: 40.h,
                         width: 40.w,
                       )
@@ -197,3 +219,4 @@ class MessagesForHomeScreen extends StatelessWidget {
       ),
     );
   }
+}

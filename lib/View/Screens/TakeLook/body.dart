@@ -24,13 +24,13 @@ class BodyTakeALook extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          sb(h: 102.h),
+        SizedBox(height: 102.h),
           Center(
             child: Image.asset(
               assetPath,
             ),
           ),
-          sb(h: 40.h),
+        SizedBox(height: 40.h),
           Text(
             " Shopping",
             style: GoogleFonts.roboto().copyWith(
@@ -38,7 +38,7 @@ class BodyTakeALook extends StatelessWidget {
                 color: Color(0xff280138),
                 fontWeight: FontWeight.w900),
           ),
-          sb(h: 31.h),
+        SizedBox(height: 31.h),
           mainButton(
             context: context,
             textColor: white,
@@ -48,7 +48,7 @@ class BodyTakeALook extends StatelessWidget {
                print("h: $_height \t \n \t w:$_width  \t \n \t p: $paddingTop");
             },
           ),
-          sb(h: 55.h),
+        SizedBox(height: 55.h),
           customTextButton(
             context: context,
             onPressed: () => navAndFinish(

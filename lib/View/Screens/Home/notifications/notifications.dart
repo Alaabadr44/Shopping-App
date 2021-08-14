@@ -13,9 +13,10 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
     bool isNew = true;
+    bool isThereNotificationNewUnRead = false;
     bool isEarlier = true;
+    bool isThereNotificationEarlierUnRead = false;
     return Scaffold(
       appBar: notificationsScreenAppBar(
         closePress: () =>
@@ -26,22 +27,20 @@ class NotificationsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            sb(h: 20.h),
-            mainBigTopic(_width, context, "notifications"),
-            sb(h: 24.h),
+            SizedBox(height: 20.h),
+            MainBigTopic(topic: "notifications"),
+            SizedBox(height: 24.h),
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (isNew)
-                    notificationsScreenSubTopic(
-                      _width,
-                      context,
+                    NotificationsScreenSubTopic(
                       subTopic: "New",
-                      conditionViewNum: true,
+                      conditionViewNum: isThereNotificationNewUnRead,
                       numberNotifications: 5,
                     ),
-                  sb(h: 25.h),
+                  SizedBox(height: 25.h),
                   /*
                   
                 مطلوب تحديد الارتفاع بتاع الكونتينر على حسب عدد العناصر
@@ -56,13 +55,11 @@ class NotificationsScreen extends StatelessWidget {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: 2, //? ___ 2____
                         separatorBuilder: (BuildContext context, int index) {
-                          return sb(h: 20.h);
+                          return SizedBox(height: 20.h);
                         },
                         itemBuilder: (BuildContext context, int index) {
                           bool viewRead = index == 0 ? true : false;
-                          return notificationsModelView(
-                            _width,
-                            context,
+                          return NotificationsModelView(
                             isReading: viewRead,
                             notificationsTime: "935 AM",
                             notificationsText:
@@ -74,13 +71,11 @@ class NotificationsScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                  sb(h: 20.h),
+                  SizedBox(height: 20.h),
                   if (isEarlier)
-                    notificationsScreenSubTopic(
-                      _width,
-                      context,
+                    NotificationsScreenSubTopic(
                       subTopic: "Earlier",
-                      conditionViewNum: true,
+                      conditionViewNum: isThereNotificationEarlierUnRead,
                       numberNotifications: 5,
                     ),
                   if (isEarlier)
@@ -91,18 +86,16 @@ class NotificationsScreen extends StatelessWidget {
                         physics: BouncingScrollPhysics(),
                         itemCount: 15, //? ___ 15____
                         separatorBuilder: (BuildContext context, int index) {
-                          return sb(h: 20.h);
+                          return SizedBox(height: 20.h);
                         },
                         itemBuilder: (BuildContext context, int index) {
                           bool viewRead = index == 0 ? true : false;
-                          return notificationsModelView(
-                            _width,
-                            context,
+                          return NotificationsModelView(
                             isReading: viewRead,
                             notificationsTime: "935 AM",
                             notificationsText:
                                 " 50% OFF  in Ultrashort AllTerrain  Ltd Shoes!!  ",
-                            // notificationsSpecialWord: "AllTerrain",
+                            notificationsSpecialWord: "50% OFF",
                             notificationsSenderPhotoUrl:
                                 "https://pbs.twimg.com/profile_images/1416573352358162446/vQPbSf9Z_400x400.jpg",
                           );
@@ -117,14 +110,22 @@ class NotificationsScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Padding notificationsScreenSubTopic(
-    double _width,
-    BuildContext context, {
-    required String subTopic,
-    int? numberNotifications,
-    bool? conditionViewNum = false,
-  }) {
+class NotificationsScreenSubTopic extends StatelessWidget {
+  final String subTopic;
+  final int? numberNotifications;
+  final bool conditionViewNum;
+  const NotificationsScreenSubTopic({
+    Key? key,
+    required this.subTopic,
+    this.numberNotifications,
+    required this.conditionViewNum,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsetsDirectional.only(start: _width * 0.05),
       child: Row(
@@ -137,7 +138,7 @@ class NotificationsScreen extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
-          sb(w: 10.w),
+          SizedBox(width: 10.w),
           if (conditionViewNum == true)
             Container(
               height: 15.h,
@@ -155,7 +156,7 @@ class NotificationsScreen extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           fontSize: 12.sp),
                     )
-                  : sb(),
+                  : SizedBox(),
             )
         ],
       ),
@@ -190,196 +191,214 @@ AppBar notificationsScreenAppBar({
   );
 }
 
-Container notificationsModelView(
-  double _width,
-  BuildContext context, {
-  required bool isReading,
-  required String notificationsTime,
-  required String notificationsText,
-  String? notificationsSpecialWord = '',
-  String? notificationsSender,
-  String? notificationsSenderPhoto,
-  String? notificationsSenderPhotoUrl,
-  void Function()? notificationsPress,
-}) {
-  wordOfLine specialWordInLinePosition = whereWordInLine(
-    lineOfWords: notificationsText,
-    word: notificationsSpecialWord!,
-  );
+class NotificationsModelView extends StatelessWidget {
+  final bool isReading;
+  final String notificationsTime;
+  final String notificationsText;
+  final String? notificationsSpecialWord;
+  final String? notificationsSender;
+  final String? notificationsSenderPhoto;
+  final String? notificationsSenderPhotoUrl;
+  final void Function()? notificationsPress;
 
-  ResultOfSplitLineToPartsByWord? result = splitLineToPartsByWord(
-    lineOfWords: notificationsText,
-    word: notificationsSpecialWord,
-    wordPositionInLine: specialWordInLinePosition,
-  );
+  const NotificationsModelView({
+    Key? key,
+    required this.isReading,
+    required this.notificationsTime,
+    required this.notificationsText,
+    this.notificationsSender,
+    this.notificationsSenderPhoto,
+    this.notificationsSenderPhotoUrl,
+    this.notificationsPress,
+    this.notificationsSpecialWord,
+  }) : super(key: key);
 
-  return Container(
-    alignment: Alignment.center,
-    height: 95.h,
-    width: _width,
-    color: isReading ? white : secondaryColor,
-    child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: _width * 0.02),
-      child: ListTile(
-        onTap: notificationsPress ?? () {},
-        // title: Text(
-        //   notificationsSender,
-        //   style: defaultTextStyle(context).copyWith(
-        //     color: black,
-        //     fontSize: 20.sp,
-        //     fontWeight: FontWeight.w500,
-        //   ),
-        // ),
-        leading: Container(
-          alignment: Alignment.center,
-          height: 60.h,
-          width: 60.w,
-          decoration: BoxDecoration(
-            color: thirdColor,
-            shape: BoxShape.circle,
-            image: notificationsSenderPhotoUrl != null
-                ? DecorationImage(
-                    image: NetworkImage(
-                      notificationsSenderPhotoUrl,
-                    ),
-                    fit: BoxFit.cover,
+  @override
+  Widget build(BuildContext context) {
+    wordOfLine specialWordInLinePosition = wordOfLine.none;
+    ResultOfSplitLineToPartsByWord? result;
+    if (notificationsSpecialWord != null) {
+      specialWordInLinePosition = whereWordInLine(
+        lineOfWords: notificationsText,
+        word: notificationsSpecialWord!,
+      );
+
+      result = splitLineToPartsByWord(
+        lineOfWords: notificationsText,
+        word: notificationsSpecialWord!,
+        wordPositionInLine: specialWordInLinePosition,
+      );
+    }
+    double _width = MediaQuery.of(context).size.width;
+
+    return Container(
+      alignment: Alignment.center,
+      height: 95.h,
+      width: _width,
+      color: isReading ? white : secondaryColor,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: _width * 0.02),
+        child: ListTile(
+          onTap: notificationsPress ?? () {},
+          // title: Text(
+          //   notificationsSender,
+          //   style: defaultTextStyle(context).copyWith(
+          //     color: black,
+          //     fontSize: 20.sp,
+          //     fontWeight: FontWeight.w500,
+          //   ),
+          // ),
+          leading: Container(
+            alignment: Alignment.center,
+            height: 60.h,
+            width: 60.w,
+            decoration: BoxDecoration(
+              color: thirdColor,
+              shape: BoxShape.circle,
+              image: notificationsSenderPhotoUrl != null
+                  ? DecorationImage(
+                      image: NetworkImage(
+                        notificationsSenderPhotoUrl!,
+                      ),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+            ),
+            child: notificationsSenderPhoto != null
+                ? SvgPicture.asset(
+                    notificationsSenderPhoto!,
+                    height: 40.h,
+                    width: 40.w,
                   )
                 : null,
           ),
-          child: notificationsSenderPhoto != null
-              ? SvgPicture.asset(
-                  notificationsSenderPhoto,
-                  height: 40.h,
-                  width: 40.w,
-                )
-              : null,
-        ),
 
-        subtitle: specialWordInLinePosition == wordOfLine.none
-            ? Text(
-                notificationsText,
-                style: defaultTextStyle(context).copyWith(
-                  color: black,
-                  fontSize: 17.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              )
-            : specialWordInLinePosition == wordOfLine.start
-                ? RichText(
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    text: TextSpan(
+          subtitle: specialWordInLinePosition == wordOfLine.none
+              ? Text(
+                  notificationsText,
+                  style: defaultTextStyle(context).copyWith(
+                    color: black,
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              : specialWordInLinePosition == wordOfLine.start
+                  ? RichText(
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      text: TextSpan(
+                        style: defaultTextStyle(context).copyWith(
+                          fontSize: 17.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "$notificationsSpecialWord",
+                            style: TextStyle(
+                              color: premiumColor,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "${result!.secondPart}",
+                            style: TextStyle(
+                              color: Color(0xff4A4A4A),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : specialWordInLinePosition == wordOfLine.middle
+                      ? RichText(
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                            style: defaultTextStyle(context).copyWith(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: "${result!.firstPart}",
+                                style: TextStyle(
+                                  color: Color(0xff4A4A4A),
+                                ),
+                              ),
+                              TextSpan(
+                                text: "${result.word}",
+                                style: TextStyle(
+                                  color: premiumColor,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "${result.secondPart}",
+                                style: TextStyle(
+                                  color: Color(0xff4A4A4A),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : RichText(
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                            style: defaultTextStyle(context).copyWith(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: "${result!.firstPart}",
+                                style: TextStyle(
+                                  color: Color(0xff4A4A4A),
+                                ),
+                              ),
+                              TextSpan(
+                                text: "$notificationsSpecialWord",
+                                style: TextStyle(
+                                  color: premiumColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+          trailing: SizedBox(
+            height: 27,
+            width: 63,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      notificationsTime,
                       style: defaultTextStyle(context).copyWith(
+                        color: Color(0xff939292),
                         fontSize: 17.sp,
                         fontWeight: FontWeight.w500,
                       ),
-                      children: [
-                        TextSpan(
-                          text: "$notificationsSpecialWord",
-                          style: TextStyle(
-                            color: premiumColor,
-                          ),
-                        ),
-                        TextSpan(
-                          text: "${result!.secondPart}",
-                          style: TextStyle(
-                            color: Color(0xff4A4A4A),
-                          ),
-                        ),
-                      ],
+                    ),
+                  ],
+                ),
+                // SizedBox(height: 5.h),
+                if (!isReading)
+                  Container(
+                    height: 10.h,
+                    width: 10.w,
+                    decoration: BoxDecoration(
+                      color: thirdColor,
+                      shape: BoxShape.circle,
                     ),
                   )
-                : specialWordInLinePosition == wordOfLine.middle
-                    ? RichText(
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        text: TextSpan(
-                          style: defaultTextStyle(context).copyWith(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: "${result!.firstPart}",
-                              style: TextStyle(
-                                color: Color(0xff4A4A4A),
-                              ),
-                            ),
-                            TextSpan(
-                              text: "${result.word}",
-                              style: TextStyle(
-                                color: premiumColor,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "${result.secondPart}",
-                              style: TextStyle(
-                                color: Color(0xff4A4A4A),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : RichText(
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        text: TextSpan(
-                          style: defaultTextStyle(context).copyWith(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: "${result!.firstPart}",
-                              style: TextStyle(
-                                color: Color(0xff4A4A4A),
-                              ),
-                            ),
-                            TextSpan(
-                              text: "$notificationsSpecialWord",
-                              style: TextStyle(
-                                color: premiumColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-        trailing: SizedBox(
-          height: 27,
-          width: 63,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    notificationsTime,
-                    style: defaultTextStyle(context).copyWith(
-                      color: Color(0xff939292),
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              // sb(h: 5.h),
-              if (!isReading)
-                Container(
-                  height: 10.h,
-                  width: 10.w,
-                  decoration: BoxDecoration(
-                    color: thirdColor,
-                    shape: BoxShape.circle,
-                  ),
-                )
-            ],
+              ],
+            ),
           ),
+          // tileColor: dividerColor,
         ),
-        // tileColor: dividerColor,
       ),
-    ),
-  );
+    );
+  }
 }

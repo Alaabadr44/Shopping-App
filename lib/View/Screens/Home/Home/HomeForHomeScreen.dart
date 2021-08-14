@@ -13,22 +13,22 @@ class HomeForHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+    return HomeForHomePageBody(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          sb(h: 12.h),
-          homeTopicText(context, 'New arrival', _width),
-          sb(h: 10.h),
+          SizedBox(height: 12.h),
+          HomeTopicText(topic: 'New arrival'),
+          SizedBox(height: 10.h),
           CarouselSlider.builder(
             itemCount: 3,
             itemBuilder: (context, __, _) {
-              return buildBanaras(context,
-                  text: " Super Flash Sale \n" + "\t 50% Off",
-                  assetPathImage:
-                      'assets/DUMMY/2021_Clifton_website_header2 2.png');
+              return BuildBanaras(
+                text: " Super Flash Sale \n" + "\t 50% Off",
+                assetPathImage:
+                    'assets/DUMMY/2021_Clifton_website_header2 2.png',
+                seeMore: () {},
+              );
             },
             options: CarouselOptions(
               height: 165.h,
@@ -38,10 +38,10 @@ class HomeForHomeScreen extends StatelessWidget {
               // pageSnapping: false,
             ),
           ),
-          sb(h: 8.h),
+          SizedBox(height: 8.h),
           Divider(color: dividerColor, thickness: 10),
-          // sb(h: 12.h),
-          homeTopicTextRaw(context, _width, "Exclusive deals"),
+          //SizedBox(height:12.h),
+          HomeTopicTextRaw(topic: "Exclusive deals", viewAllPress: () {}),
           Container(
             height: 240,
             child: ListView.separated(
@@ -49,29 +49,28 @@ class HomeForHomeScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: 5,
               separatorBuilder: (BuildContext context, int index) {
-                return sb(w: 20.w);
+                return SizedBox(width: 20.w);
               },
               itemBuilder: (BuildContext context, int index) {
-                return exclusiveProduct(
-                  context,
+                return ExclusiveProduct(
                   assetPathImage: "assets/DUMMY/download 1.png",
                   productName: "digital clock",
                   nowPrice: '35',
                   oldPrice: '70',
-                  // addToCartPress: () {},
+                  addToCartPress: () {},
                   reviewStarsNumbers: 5,
                 );
               },
             ),
           ),
-          sb(h: 3.h),
+          SizedBox(height: 3.h),
           Divider(color: dividerColor, thickness: 10),
-          homeTopicTextRaw(
-            context,
-            _width,
-            "Categories",
-            viewAllPress: () =>
-                nav(context: context, routeName: AllCategoriesScreen.routeName),
+          HomeTopicTextRaw(
+            topic: "Categories",
+            viewAllPress: () => nav(
+              context: context,
+              routeName: AllCategoriesScreen.routeName,
+            ),
           ),
           Container(
             height: 100.h,
@@ -80,21 +79,20 @@ class HomeForHomeScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
               separatorBuilder: (BuildContext context, int index) {
-                return sb(w: 10.w);
+                return SizedBox(width: 10.w);
               },
               itemBuilder: (BuildContext context, int index) {
-                return buildCategoryItem(
-                  context,
+                return BuildCategoryItem(
                   assetPathImage: categories[index].categorieSvgIcon,
                   categorieName: categories[index].categorieName,
                 );
               },
             ),
           ),
-          sb(h: 15.h),
+          SizedBox(height: 15.h),
           Divider(color: dividerColor, thickness: 10),
-          homeTopicTextRaw(context, _width, "Products"),
-          sb(h: 15.h),
+          HomeTopicTextRaw(topic: "Products", viewAllPress: () {}),
+          SizedBox(height: 15.h),
           GridView.builder(
             shrinkWrap: true,
             physics: ClampingScrollPhysics(),
@@ -106,9 +104,7 @@ class HomeForHomeScreen extends StatelessWidget {
             ),
             itemCount: 10,
             itemBuilder: (BuildContext context, _) {
-              return buildProductHomePageCard(
-                _width,
-                context,
+              return BuildProductHomePageCard(
                 // currency: "ر.ع",
                 nowPrice: "35",
                 productName: "digital clock",
@@ -120,6 +116,22 @@ class HomeForHomeScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class HomeForHomePageBody extends StatelessWidget {
+  final Widget child;
+  const HomeForHomePageBody({
+    required this.child,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: child,
     );
   }
 }
